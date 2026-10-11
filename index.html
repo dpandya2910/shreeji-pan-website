@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreeji Pan | Mithash no Asli Swad — Nava Naroda, Ahmedabad</title>
+<meta name="description" content="Shreeji Pan, Nava Naroda, Ahmedabad (Since 2015). Handcrafted royal paan with 100% pure & premium ingredients. Order via WhatsApp.">
+<meta name="theme-color" content="#0a3d2a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@300;400;500;600&family=Noto+Serif+Gujarati:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a3d2a;
+    --card: #0f4d34;
+    --gold: #d4af37;
+    --gold-light: #f3e5ab;
+    --bronze: #a57c2b;
+    --text: #e2e8f0;
+    --muted: #a8b8b0;
+    --border: rgba(212, 175, 55, 0.25);
+    --border-strong: rgba(212, 175, 55, 0.55);
+    --error: #f5a097;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Gujarati', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(900px 600px at 15% 10%, rgba(30, 130, 85, 0.40), transparent 60%),
+      radial-gradient(800px 600px at 90% 40%, rgba(212, 175, 55, 0.10), transparent 60%),
+      radial-gradient(900px 700px at 20% 95%, rgba(20, 100, 65, 0.40), transparent 60%),
+      var(--bg);
+  }
+  h1, h2, h3 { font-family: 'Cinzel', 'Noto Serif Gujarati', serif; font-weight: 500; letter-spacing: 0.04em; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--gold); color: #06261a; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 5vw;
+    background: linear-gradient(to bottom, rgba(8,52,35,0.95), rgba(8,52,35,0));
+    backdrop-filter: blur(6px);
+  }
+  .logo { font-family: 'Cinzel', serif; font-size: 1.05rem; letter-spacing: 0.22em; color: var(--gold); font-weight: 600; }
+  .nav-links { display: flex; gap: 34px; }
+  .nav-links a {
+    font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted);
+    position: relative; padding-bottom: 4px; transition: color .3s;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0;
+    background: var(--gold); transition: width .35s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 140px 6vw 90px; position: relative;
+  }
+  .hero::before, .hero::after {
+    content: ""; position: absolute; left: 50%; width: 1px; height: 70px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+  }
+  .hero::before { top: 70px; transform: translateX(-50%); opacity: .6; }
+  .hero::after { bottom: 0; transform: translateX(-50%) rotate(180deg); }
+  .badge {
+    display: inline-block; font-size: 0.72rem; letter-spacing: 0.35em; color: var(--gold);
+    border: 1px solid var(--border-strong); padding: 10px 26px; border-radius: 100px;
+    background: rgba(212,175,55,0.06); margin-bottom: 42px;
+    animation: fadeUp 1s ease both;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 8vw, 6.2rem); line-height: 1.1; font-weight: 600;
+    background: linear-gradient(120deg, #a57c2b 0%, #f3e5ab 35%, #d4af37 55%, #a57c2b 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    background-size: 200% auto; animation: fadeUp 1s .15s ease both, shine 8s linear infinite;
+    margin-bottom: 14px;
+  }
+  .divider { display: flex; align-items: center; gap: 14px; margin: 18px 0 26px; animation: fadeUp 1s .3s ease both; }
+  .divider span { width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .divider span:last-child { transform: rotate(180deg); }
+  .divider i { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); }
+  .tagline {
+    font-family: 'Cinzel', serif; font-size: clamp(1.1rem, 2.6vw, 1.7rem); color: var(--text);
+    letter-spacing: 0.12em; animation: fadeUp 1s .35s ease both;
+  }
+  .tagline-gu {
+    font-family: 'Noto Serif Gujarati', serif; color: var(--gold-light); font-size: 1.15rem;
+    margin: 4px 0 16px; animation: fadeUp 1s .4s ease both;
+  }
+  .subtitle { max-width: 640px; color: var(--muted); font-size: 1.02rem; margin-bottom: 46px; animation: fadeUp 1s .45s ease both; }
+  .features { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; animation: fadeUp 1s .6s ease both; }
+  .feature {
+    padding: 12px 26px; border: 1px solid var(--border); border-radius: 100px;
+    background: rgba(15,77,52,0.6); backdrop-filter: blur(10px);
+    font-size: 0.88rem; letter-spacing: 0.04em; transition: all .35s;
+  }
+  .feature:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,175,55,0.14); }
+  .hero-cta {
+    margin-top: 54px; font-size: 0.74rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+    border-bottom: 1px solid var(--gold); padding-bottom: 5px; transition: letter-spacing .35s;
+    animation: fadeUp 1s .75s ease both;
+  }
+  .hero-cta:hover { letter-spacing: 0.4em; }
+
+  /* TRUSTED MARQUEE */
+  .trusted { padding: 40px 0 20px; }
+  .trusted .section-head { margin-bottom: 36px; padding: 0 6vw; }
+  .marquee {
+    overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    background: rgba(15,77,52,0.35); padding: 34px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .track { display: flex; width: max-content; animation: scroll 30s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .set { display: flex; align-items: center; }
+  .venue {
+    font-family: 'Cinzel', serif; font-size: clamp(1.15rem, 3vw, 1.8rem); letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold-light); white-space: nowrap;
+    display: flex; align-items: center; padding: 0 42px; transition: color .3s;
+  }
+  .venue::after {
+    content: ""; width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg);
+    margin-left: 84px; flex-shrink: 0; opacity: .7;
+  }
+  .venue:hover { color: var(--gold); }
+
+  /* SECTIONS */
+  section { padding: 110px 6vw; max-width: 1240px; margin: 0 auto; }
+  .section-head { text-align: center; margin-bottom: 64px; }
+  .eyebrow { font-size: 0.72rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+  .section-head h2 { font-size: clamp(1.7rem, 4.2vw, 3rem); margin-bottom: 18px; }
+  .section-head p { color: var(--muted); max-width: 540px; margin: 0 auto; }
+
+  /* MENU CARDS */
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+  .card {
+    position: relative; background: linear-gradient(160deg, rgba(15,77,52,0.92), rgba(15,77,52,0.55));
+    border: 1px solid var(--border); border-radius: 4px; padding: 40px 32px 32px;
+    backdrop-filter: blur(14px); transition: transform .5s, border-color .5s, box-shadow .5s;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .menu-grid .card { animation: float 6s ease-in-out infinite; }
+  .menu-grid .card:nth-child(2) { animation-delay: -2s; }
+  .menu-grid .card:nth-child(3) { animation-delay: -4s; }
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0); transition: transform .6s;
+  }
+  .card:hover { transform: translateY(-8px); border-color: var(--border-strong); box-shadow: 0 25px 60px rgba(0,0,0,0.4), 0 0 40px rgba(212,175,55,0.1); }
+  .card:hover::before { transform: scaleX(1); }
+  .card.active { border-color: var(--gold); }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .card-num { font-family: 'Cinzel', serif; font-size: 3rem; color: rgba(212,175,55,0.2); line-height: 1; }
+  .price {
+    font-family: 'Cinzel', serif; font-size: 1.5rem; color: #06261a; font-weight: 600;
+    background: linear-gradient(120deg, #a57c2b, #f3e5ab 50%, #d4af37); padding: 6px 18px; border-radius: 100px;
+  }
+  .card h3 { font-size: 1.45rem; color: var(--gold-light); line-height: 1.5; letter-spacing: 0.02em; }
+  .en-name { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; }
+  .ing-label { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; flex: 1; align-content: flex-start; margin-bottom: 28px; }
+  .chips li {
+    font-family: 'Noto Sans Gujarati', 'Plus Jakarta Sans', sans-serif; font-size: 0.82rem; font-weight: 400;
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 100px; background: rgba(5,30,20,0.35);
+    color: var(--text); line-height: 1.6;
+  }
+  .qty { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 22px; }
+  .qty-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+  .qty-controls { display: flex; align-items: center; gap: 16px; }
+  .qty-btn {
+    width: 40px; height: 40px; border-radius: 50%; background: transparent; cursor: pointer;
+    border: 1px solid var(--border-strong); color: var(--gold); font-size: 1.3rem; line-height: 1;
+    transition: all .3s; font-family: inherit;
+  }
+  .qty-btn:hover { background: var(--gold); color: #06261a; box-shadow: 0 0 18px rgba(212,175,55,0.4); }
+  .qty-btn:active { transform: scale(0.92); }
+  .qty-btn:focus-visible, .cta:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+  .qty-value { font-family: 'Cinzel', serif; font-size: 1.5rem; min-width: 30px; text-align: center; color: var(--text); }
+
+  /* ORDER */
+  .order-wrap {
+    max-width: 760px; margin: 0 auto; padding: 56px clamp(24px, 5vw, 56px);
+    background: linear-gradient(160deg, rgba(15,77,52,0.92), rgba(15,77,52,0.6));
+    border: 1px solid var(--border-strong); border-radius: 4px; backdrop-filter: blur(16px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4); position: relative;
+  }
+  .order-wrap::before, .order-wrap::after { content: ""; position: absolute; width: 26px; height: 26px; border: 1px solid var(--gold); }
+  .order-wrap::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .order-wrap::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .field { margin-bottom: 26px; }
+  label { display: block; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  input, textarea {
+    width: 100%; background: rgba(7,50,33,0.7); border: 1px solid var(--border);
+    color: var(--text); font-family: inherit; font-size: 1rem; font-weight: 300;
+    padding: 15px 18px; border-radius: 2px; transition: all .3s; resize: vertical;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(168,184,176,0.55); }
+  input:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.14); }
+  .invalid input, .invalid textarea { border-color: var(--error); }
+  .err { display: none; color: var(--error); font-size: 0.8rem; margin-top: 8px; }
+  .invalid .err { display: block; }
+  .summary { border: 1px dashed var(--border-strong); padding: 20px 24px; margin-bottom: 30px; border-radius: 2px; background: rgba(212,175,55,0.04); }
+  .summary h4 { font-family: 'Cinzel', serif; font-weight: 500; color: var(--gold); font-size: 0.95rem; letter-spacing: 0.15em; margin-bottom: 10px; }
+  .summary ul { list-style: none; }
+  .summary li { display: flex; justify-content: space-between; gap: 14px; font-size: 0.95rem; padding: 6px 0; border-bottom: 1px solid rgba(212,175,55,0.1); }
+  .summary li:last-child { border-bottom: 0; }
+  .summary li span:last-child { white-space: nowrap; }
+  .summary .empty { color: var(--muted); font-size: 0.9rem; }
+  .summary .total {
+    display: flex; justify-content: space-between; align-items: baseline; margin-top: 12px; padding-top: 14px;
+    border-top: 1px solid var(--border-strong); font-family: 'Cinzel', serif; letter-spacing: 0.1em;
+  }
+  .summary .total strong { font-size: 1.6rem; color: var(--gold-light); font-weight: 600; }
+  .summary.invalid { border-color: var(--error); }
+  .summary .err { margin-top: 10px; }
+  .cta {
+    width: 100%; padding: 20px; border: 0; border-radius: 2px; cursor: pointer;
+    font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #06261a; background: linear-gradient(120deg, #a57c2b, #f3e5ab 45%, #d4af37 70%, #a57c2b);
+    background-size: 200% auto; transition: all .5s; box-shadow: 0 10px 30px rgba(212,175,55,0.25);
+  }
+  .cta:hover { background-position: right center; transform: translateY(-3px); box-shadow: 0 16px 40px rgba(212,175,55,0.4); }
+  .cta:active { transform: translateY(0); }
+  .note { text-align: center; margin-top: 18px; font-size: 0.82rem; color: var(--muted); }
+
+  /* LOCATION */
+  .loc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto; }
+  .loc-card {
+    background: linear-gradient(160deg, rgba(15,77,52,0.92), rgba(15,77,52,0.55));
+    border: 1px solid var(--border); border-radius: 4px; padding: 38px 32px; backdrop-filter: blur(14px);
+    transition: border-color .4s, transform .4s;
+  }
+  .loc-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+  .loc-card h3 { font-size: 1.1rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }
+  .loc-card address { font-style: normal; color: var(--text); }
+  .loc-card .gu { font-family: 'Noto Sans Gujarati', sans-serif; color: var(--gold-light); margin-top: 12px; font-weight: 400; }
+  .loc-link {
+    display: inline-block; margin-top: 22px; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 4px;
+  }
+  .phones a {
+    display: block; font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--gold-light);
+    letter-spacing: 0.08em; margin-bottom: 8px; transition: color .3s;
+  }
+  .phones a:hover { color: var(--gold); }
+  .phones p { color: var(--muted); font-size: 0.9rem; margin-top: 14px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); text-align: center; padding: 50px 6vw 40px; background: rgba(15,77,52,0.5); }
+  footer .logo { display: block; margin-bottom: 14px; font-size: 1.2rem; }
+  footer p { color: var(--muted); font-size: 0.88rem; }
+  footer a { color: var(--gold); }
+  footer a:hover { text-decoration: underline; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 1s ease, transform 1s ease; }
+  .reveal.show { opacity: 1; transform: none; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  @keyframes shine { to { background-position: 200% center; } }
+  @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  @media (max-width: 720px) {
+    .nav-links { gap: 18px; }
+    .nav-links a { font-size: 0.65rem; letter-spacing: 0.15em; }
+    .logo { font-size: 0.8rem; letter-spacing: 0.15em; }
+    section { padding: 80px 6vw; }
+    .badge { letter-spacing: 0.16em; font-size: 0.62rem; padding: 10px 16px; }
+    .order-wrap { padding: 44px 22px; }
+    .venue { padding: 0 24px; }
+    .venue::after { margin-left: 48px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; }
+    .track { width: auto; flex-wrap: wrap; justify-content: center; }
+    .set { flex-wrap: wrap; justify-content: center; }
+    .set[aria-hidden="true"] { display: none; }
+    .marquee { -webkit-mask-image: none; mask-image: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="logo">SHREEJI</a>
+  <div class="nav-links">
+    <a href="#menu">Menu</a>
+    <a href="#order">Order</a>
+    <a href="#visit">Visit</a>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <span class="badge">SINCE 2015 • NAWA NARODA, AHMEDABAD</span>
+  <h1>SHREEJI PAN</h1>
+  <div class="divider"><span></span><i></i><span></span></div>
+  <p class="tagline">Mithash no Asli Swad</p>
+  <p class="tagline-gu">મીઠાશનો અસલી સ્વાદ</p>
+  <p class="subtitle">Experience handcrafted royal flavors with 100% pure &amp; premium ingredients.</p>
+  <div class="features">
+    <div class="feature">🌿 100% Taja Paan</div>
+    <div class="feature">✨ Premium Quality Ingredients</div>
+    <div class="feature">👨‍🍳 Expert Staff of 20</div>
+  </div>
+  <a href="#menu" class="hero-cta">Explore the Menu</a>
+</header>
+
+<div class="trusted" id="trusted">
+  <div class="section-head reveal">
+    <div class="eyebrow">Our Patrons</div>
+    <h2>TRUSTED BY FAMOUS RESTAURANTS &amp; HOTELS</h2>
+  </div>
+  <div class="marquee reveal">
+    <div class="track">
+      <div class="set">
+        <div class="venue">Monument</div>
+        <div class="venue">Mayur</div>
+        <div class="venue">Golden Era</div>
+        <div class="venue">Shahnai</div>
+        <div class="venue">Elite</div>
+        <div class="venue">People Dine</div>
+      </div>
+      <div class="set" aria-hidden="true">
+        <div class="venue">Monument</div>
+        <div class="venue">Mayur</div>
+        <div class="venue">Golden Era</div>
+        <div class="venue">Shahnai</div>
+        <div class="venue">Elite</div>
+        <div class="venue">People Dine</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="menu">
+  <div class="section-head reveal">
+    <div class="eyebrow">The Collection</div>
+    <h2>Signature Menu</h2>
+    <p>Three timeless creations, hand-rolled fresh. Choose your quantities below.</p>
+  </div>
+  <div class="menu-grid">
+
+    <article class="card reveal" data-id="mitha">
+      <div class="card-top"><div class="card-num">01</div><div class="price">₹20</div></div>
+      <h3>શ્રીજી મીઠા પાન</h3>
+      <div class="en-name">Shreeji Mitha Pan</div>
+      <div class="ing-label">Ingredients</div>
+      <ul class="chips">
+        <li>ટૂટીફુટી</li><li>પાન ચટણી કેસર</li><li>વરિયાળી</li><li>ધાણા દાળ</li><li>ગુલાબ પતી</li>
+        <li>લવલી</li><li>જેઠી મધ</li><li>ગુલાબ ગુલકંદ</li><li>કેસર મુખવાસ</li><li>ગ્રીન મુખવાસ</li>
+        <li>ગુલાબ લચ્છા</li><li>કેસર લચ્છા</li><li>સુમન ખારેક</li>
+      </ul>
+      <div class="qty">
+        <span class="qty-label">Quantity</span>
+        <div class="qty-controls">
+          <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease Shreeji Mitha Pan">−</button>
+          <span class="qty-value" aria-live="polite">0</span>
+          <button type="button" class="qty-btn" data-action="inc" aria-label="Increase Shreeji Mitha Pan">+</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal" data-id="sada">
+      <div class="card-top"><div class="card-num">02</div><div class="price">₹25</div></div>
+      <h3>કલકતી સાદા પાન</h3>
+      <div class="en-name">Kalkatti Sada Pan</div>
+      <div class="ing-label">Ingredients</div>
+      <ul class="chips">
+        <li>કલકતી પાન પતું</li><li>કાઠા</li><li>વરિયાળી</li><li>પાન ચટણી</li><li>કેસર ચટણી</li>
+        <li>સેકેલી સોપારી</li><li>લવલી</li><li>લચ્છા સોપારી કેસર</li><li>લક્ષ્મી લેબલેટ</li>
+        <li>જેઠી મધ</li><li>ગુલાબ પતી</li><li>ઇલાયચી પાવડર</li>
+      </ul>
+      <div class="qty">
+        <span class="qty-label">Quantity</span>
+        <div class="qty-controls">
+          <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease Kalkatti Sada Pan">−</button>
+          <span class="qty-value" aria-live="polite">0</span>
+          <button type="button" class="qty-btn" data-action="inc" aria-label="Increase Kalkatti Sada Pan">+</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal" data-id="namkeen">
+      <div class="card-top"><div class="card-num">03</div><div class="price">₹25</div></div>
+      <h3>કલકતી નમકીન પાન</h3>
+      <div class="en-name">Kalkatti Namkeen Pan</div>
+      <div class="ing-label">Ingredients</div>
+      <ul class="chips">
+        <li>કલકતી પાન પતું</li><li>કેસર ચટણી</li><li>પાન ચટણી</li><li>સેકેલી સોપારી</li><li>કેસર લચ્છા</li>
+        <li>લવલી</li><li>ઇલાયચી - લવીંગ પાવડર</li><li>જેઠી મધ</li><li>લક્ષ્મી ટેબલેટ</li><li>ધાણા દાળ</li>
+      </ul>
+      <div class="qty">
+        <span class="qty-label">Quantity</span>
+        <div class="qty-controls">
+          <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease Kalkatti Namkeen Pan">−</button>
+          <span class="qty-value" aria-live="polite">0</span>
+          <button type="button" class="qty-btn" data-action="inc" aria-label="Increase Kalkatti Namkeen Pan">+</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="order">
+  <div class="section-head reveal">
+    <div class="eyebrow">Place Your Order</div>
+    <h2>Confirm Your Order</h2>
+    <p>Share your details and we will receive your order directly on WhatsApp.</p>
+  </div>
+  <form class="order-wrap reveal" id="orderForm" novalidate>
+    <div class="field" id="f-name">
+      <label for="name">Customer Name</label>
+      <input type="text" id="name" placeholder="Your full name" autocomplete="name">
+      <div class="err">Please enter your name.</div>
+    </div>
+    <div class="field" id="f-phone">
+      <label for="phone">Mobile Number</label>
+      <input type="tel" id="phone" placeholder="10-digit mobile number" autocomplete="tel" inputmode="numeric">
+      <div class="err">Please enter a valid 10-digit mobile number.</div>
+    </div>
+    <div class="field" id="f-address">
+      <label for="address">Delivery Address</label>
+      <textarea id="address" rows="3" placeholder="House / Shop no., area, landmark" autocomplete="street-address"></textarea>
+      <div class="err">Please enter your delivery address.</div>
+    </div>
+
+    <div class="summary" id="summary">
+      <h4>YOUR SELECTION</h4>
+      <ul id="summaryList"><li class="empty">No items selected yet.</li></ul>
+      <div class="total"><span>TOTAL</span><strong id="totalPrice">₹0</strong></div>
+      <div class="err" id="itemsErr">Please select at least one item from the menu.</div>
+    </div>
+
+    <button type="submit" class="cta">Confirm Order via WhatsApp</button>
+    <p class="note">You will be redirected to WhatsApp to send your order.</p>
+  </form>
+</section>
+
+<section id="visit">
+  <div class="section-head reveal">
+    <div class="eyebrow">Find Us</div>
+    <h2>Location &amp; Contact</h2>
+  </div>
+  <div class="loc-grid">
+    <div class="loc-card reveal">
+      <h3>Our Shop</h3>
+      <address>Shop No. 01, Shree Hari Avenue,<br>Nava Naroda, Ahmedabad.</address>
+      <p class="gu">શ્રી હરી એવન્યુ, શોપ નં. ૦૧, નવા નરોડા, અમદાવાદ</p>
+      <a class="loc-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Shree+Hari+Avenue+Nava+Naroda+Ahmedabad">View on Map</a>
+    </div>
+    <div class="loc-card phones reveal">
+      <h3>Call to Order</h3>
+      <a href="tel:+919601092236">+91 9601092236</a>
+      <a href="tel:+918780072923">+91 8780072923</a>
+      <p>Since 2015 • Handcrafted by our expert team of 20.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="logo">SHREEJI PAN</span>
+  <p>&copy; 2026 Shreeji Pan. Nava Naroda, Ahmedabad. Contact: <a href="tel:+919601092236">+91 9601092236</a> | <a href="tel:+918780072923">+91 8780072923</a></p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var WA_NUMBER = '919601092236';
+
+  // State: quantity per product (minimum 0)
+  var items = {
+    mitha:   { label: 'Shreeji Mitha Pan',    gu: 'શ્રીજી મીઠા પાન',   price: 20, qty: 0 },
+    sada:    { label: 'Kalkatti Sada Pan',    gu: 'કલકતી સાદા પાન',    price: 25, qty: 0 },
+    namkeen: { label: 'Kalkatti Namkeen Pan', gu: 'કલકતી નમકીન પાન',   price: 25, qty: 0 }
+  };
+
+  var summaryList = document.getElementById('summaryList');
+  var summaryBox  = document.getElementById('summary');
+  var totalEl     = document.getElementById('totalPrice');
+
+  function getTotal() {
+    return Object.keys(items).reduce(function (sum, k) { return sum + items[k].price * items[k].qty; }, 0);
+  }
+
+  function renderSummary() {
+    var html = '';
+    Object.keys(items).forEach(function (k) {
+      var it = items[k];
+      if (it.qty > 0) {
+        html += '<li><span>' + it.label + '</span><span>' + it.qty + ' × ₹' + it.price + ' = ₹' + (it.qty * it.price) + '</span></li>';
+      }
+    });
+    summaryList.innerHTML = html || '<li class="empty">No items selected yet.</li>';
+    totalEl.textContent = '₹' + getTotal();
+  }
+
+  // Quantity controls
+  document.querySelectorAll('.card').forEach(function (card) {
+    var id = card.getAttribute('data-id');
+    var valueEl = card.querySelector('.qty-value');
+    card.querySelectorAll('.qty-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var action = btn.getAttribute('data-action');
+        if (action === 'inc') items[id].qty += 1;
+        if (action === 'dec') items[id].qty = Math.max(0, items[id].qty - 1);
+        valueEl.textContent = items[id].qty;
+        card.classList.toggle('active', items[id].qty > 0);
+        summaryBox.classList.remove('invalid');
+        renderSummary();
+      });
+    });
+  });
+
+  // Phone: allow digits and basic separators only
+  var phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', function () {
+    phoneInput.value = phoneInput.value.replace(/[^\d+\s-]/g, '');
+  });
+
+  // Clear errors while typing
+  ['name', 'phone', 'address'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      document.getElementById('f-' + id).classList.remove('invalid');
+    });
+  });
+
+  function setInvalid(id, bad) {
+    document.getElementById('f-' + id).classList.toggle('invalid', bad);
+    return bad;
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var name    = document.getElementById('name').value.trim();
+    var phone   = phoneInput.value.trim();
+    var address = document.getElementById('address').value.trim();
+    var digits  = phone.replace(/\D/g, '');
+
+    // 1. Validate customer details
+    var bad = false;
+    bad = setInvalid('name', !name) || bad;
+    bad = setInvalid('phone', digits.length < 10) || bad;
+    bad = setInvalid('address', !address) || bad;
+
+    // 2. Validate at least one item
+    var selected = Object.keys(items).filter(function (k) { return items[k].qty > 0; });
+    var noItems = selected.length === 0;
+    summaryBox.classList.toggle('invalid', noItems);
+
+    if (bad || noItems) {
+      var firstErr = document.querySelector('.invalid');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // 3. Build WhatsApp message (with dynamic total)
+    var lines = [];
+    lines.push('*New Order — Shreeji Pan*');
+    lines.push('');
+    lines.push('*Customer Details*');
+    lines.push('Name: ' + name);
+    lines.push('Mobile: ' + phone);
+    lines.push('Address: ' + address);
+    lines.push('');
+    lines.push('*Order Items*');
+    selected.forEach(function (k, i) {
+      var it = items[k];
+      lines.push((i + 1) + '. ' + it.label + ' (' + it.gu + ') — ' + it.qty + ' × ₹' + it.price + ' = ₹' + (it.qty * it.price));
+    });
+    lines.push('');
+    lines.push('*Total Price: ₹' + getTotal() + '*');
+    lines.push('');
+    lines.push('Thank you!');
+
+    // 4. Redirect to WhatsApp
+    window.location.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('show'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 3) * 0.12 + 's';
+      io.observe(el);
+    });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('show'); });
+  }
+})();
+</script>
+</body>
+</html>
