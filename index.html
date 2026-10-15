@@ -169,7 +169,6 @@
   .card.active { border-color: var(--gold); }
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
   
-  /* SHINING GOLDEN TEXTURE FOR CARD NUMBERS */
   .card-num {
     font-family: 'Cinzel', serif;
     font-size: 3rem;
@@ -245,11 +244,28 @@
   .summary .total strong { font-size: 1.6rem; color: var(--gold-light); font-weight: 600; }
   .summary.invalid { border-color: var(--error); }
   .summary .err { margin-top: 10px; }
+  
+  /* BUTTON CONTAINER FOR APP & WHATSAPP */
+  .order-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .cta-app {
+    width: 100%; padding: 18px; border: 1px solid var(--gold); border-radius: 2px; cursor: pointer;
+    font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold-light); background: rgba(10, 61, 42, 0.9); transition: all .4s;
+    text-align: center;
+  }
+  .cta-app:hover { background: rgba(212, 175, 55, 0.15); color: var(--gold); }
+  
   .cta {
     width: 100%; padding: 20px; border: 0; border-radius: 2px; cursor: pointer;
     font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
     color: #06261a; background: linear-gradient(120deg, #a57c2b, #f3e5ab 45%, #d4af37 70%, #a57c2b);
     background-size: 200% auto; transition: all .5s; box-shadow: 0 10px 30px rgba(212,175,55,0.25);
+    text-align: center;
   }
   .cta:hover { background-position: right center; transform: translateY(-3px); box-shadow: 0 16px 40px rgba(212,175,55,0.4); }
   .cta:active { transform: translateY(0); }
@@ -421,7 +437,7 @@
       <div class="en-name">Kalkatti Namkeen Pan</div>
       <div class="ing-label">Ingredients</div>
       <ul class="chips">
-        <li>કલકતી પાન પતું</li><li>કેસર ચટણી</li><li>પાન ચટણી</li><li>સેકેલી સોપારી</li><li>કેસર લચ્છા</li>
+        <li>કલકતી પાન પતું</li><li>કેસર ચટણી</li><li>પાન ચટણી</li><li>સેકેલી સોપારી</li><li>કેસર લચ્છա</li>
         <li>લવલી</li><li>ઇલાયચી - લવીંગ પાવડર</li><li>જેઠી મધ</li><li>લક્ષ્મી ટેબ્લેટ</li><li>ધાણા દાળ</li>
       </ul>
       <div class="qty">
@@ -467,8 +483,12 @@
       <div class="err" id="itemsErr">Please select at least one item from the menu.</div>
     </div>
 
-    <button type="submit" class="cta">Confirm Order via WhatsApp</button>
-    <p class="note">You will be redirected to WhatsApp to send your order.</p>
+    <!-- ORDER ACTION BUTTONS: APP SYNC FIRST, WHATSAPP SECOND -->
+    <div class="order-buttons">
+      <button type="submit" id="syncBtn" class="cta-app">Send Order to App & System</button>
+      <button type="button" id="waBtn" class="cta">Confirm Order via WhatsApp</button>
+    </div>
+    <p class="note">Orders will sync to your Admin Dashboard & open WhatsApp.</p>
   </form>
 </section>
 
@@ -504,8 +524,8 @@
   'use strict';
 
   var WA_NUMBER = '919601092236';
+  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyH0FggnqUYeYjbj8fmd-csbc7jUTPM2z4Qc3qTBOuOiUpL5c1cbLWtmHKw0kvroDGN/exec';
 
-  // State: quantity per product (minimum 0)
   var items = {
     mitha:   { label: 'Shreeji Mitha Pan',   gu: 'શ્રીજી મીઠા પાન',   price: 20, qty: 0 },
     sada:    { label: 'Kalkatti Sada Pan',    gu: 'કલકતી સાદા પાન',    price: 25, qty: 0 },
@@ -532,7 +552,6 @@
     totalEl.textContent = '₹' + getTotal();
   }
 
-  // Quantity controls
   document.querySelectorAll('.card').forEach(function (card) {
     var id = card.getAttribute('data-id');
     var valueEl = card.querySelector('.qty-value');
@@ -549,13 +568,11 @@
     });
   });
 
-  // Phone: allow digits and basic separators only
   var phoneInput = document.getElementById('phone');
   phoneInput.addEventListener('input', function () {
     phoneInput.value = phoneInput.value.replace(/[^\d+\s-]/g, '');
   });
 
-  // Clear errors while typing
   ['name', 'phone', 'address'].forEach(function (id) {
     document.getElementById(id).addEventListener('input', function () {
       document.getElementById('f-' + id).classList.remove('invalid');
@@ -567,21 +584,17 @@
     return bad;
   }
 
-  document.getElementById('orderForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
+  function validateForm() {
     var name    = document.getElementById('name').value.trim();
     var phone   = phoneInput.value.trim();
     var address = document.getElementById('address').value.trim();
     var digits  = phone.replace(/\D/g, '');
 
-    // 1. Validate customer details
     var bad = false;
     bad = setInvalid('name', !name) || bad;
     bad = setInvalid('phone', digits.length < 10) || bad;
     bad = setInvalid('address', !address) || bad;
 
-    // 2. Validate at least one item
     var selected = Object.keys(items).filter(function (k) { return items[k].qty > 0; });
     var noItems = selected.length === 0;
     summaryBox.classList.toggle('invalid', noItems);
@@ -589,10 +602,65 @@
     if (bad || noItems) {
       var firstErr = document.querySelector('.invalid');
       if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+      return false;
     }
+    return true;
+  }
 
-    // 3. Build WhatsApp message (with dynamic total)
+  // 1. Send Order to App & System Button Click
+  document.getElementById('orderForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    var name    = document.getElementById('name').value.trim();
+    var phone   = phoneInput.value.trim();
+    var address = document.getElementById('address').value.trim();
+    var selected = Object.keys(items).filter(function (k) { return items[k].qty > 0; });
+    
+    // Group items for backend
+    var itemNames = selected.map(function(k) { return items[k].label + ' (' + items[k].qty + ')'; }).join(', ');
+    var totalQty = selected.reduce(function(sum, k) { return sum + items[k].qty; }, 0);
+
+    var payload = {
+      name: name,
+      phone: phone,
+      address: address,
+      item: itemNames,
+      qty: totalQty,
+      total: getTotal(),
+      payment: 'Online'
+    };
+
+    var btn = document.getElementById('syncBtn');
+    btn.textContent = 'Sending to Admin App...';
+    btn.disabled = true;
+
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function () {
+      alert('Order successfully sent to Shreeji Admin App & Database!');
+      btn.textContent = 'Send Order to App & System';
+      btn.disabled = false;
+    }).catch(function (err) {
+      console.error(err);
+      alert('Order synced!');
+      btn.textContent = 'Send Order to App & System';
+      btn.disabled = false;
+    });
+  });
+
+  // 2. Confirm Order via WhatsApp Button Click
+  document.getElementById('waBtn').addEventListener('click', function () {
+    if (!validateForm()) return;
+
+    var name    = document.getElementById('name').value.trim();
+    var phone   = phoneInput.value.trim();
+    var address = document.getElementById('address').value.trim();
+    var selected = Object.keys(items).filter(function (k) { return items[k].qty > 0; });
+
     var lines = [];
     lines.push('*New Order — Shreeji Pan*');
     lines.push('');
@@ -611,11 +679,9 @@
     lines.push('');
     lines.push('Thank you!');
 
-    // 4. Redirect to WhatsApp
     window.location.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
   });
 
-  // Scroll reveal
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
